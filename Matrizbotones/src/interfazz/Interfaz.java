@@ -1,29 +1,27 @@
 package interfazz;
-
+import java.awt.*;
 import javax.swing.*;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
 public class Interfaz extends JFrame implements ActionListener{
  
-	JButton array[][];
-	JButton boton1;
+	String botones[][];
+	JButton estados[][];
 	JPanel Panel;
-	JButton boton2;
-	JButton boton3;
-	JButton boton4;
+	
 	
 	public Interfaz() {
 	
 		Panel = new JPanel();
-		
-		array = new JButton[4][4];
+		botones = new String[4][4];
+		estados = new JButton[4][4];
 		Panel.setLayout(new GridLayout (4,4));
 		for(int i=0;i<4;i++) {
 			for(int j=0; j<4; j++ ) {
-			array[i][j]=new JButton("boton"+ i+ ", "+j);
-			array[i][j].addActionListener(this);
-			Panel.add(array[i][j]);
+			estados[i][j]=new JButton("boton"+ i+ ", "+j);
+			estados[i][j].addActionListener(this);
+			Panel.add(estados[i][j]);
 		}
 		}
 		add(Panel);
@@ -31,18 +29,28 @@ public class Interfaz extends JFrame implements ActionListener{
 		
 
 		
-	
 
 	
 	public void actionPerformed(ActionEvent c) {
 		for(int i=0; i<4; i++ ) {
 			for(int j=0; j<4; j++) {
-				if(c.getSource()==array[i][j]) {
-					JOptionPane.showConfirmDialog(array[i][j], "¡Pulso el boton "+i+", "+j);
-					if(c.getSource()==array[i][j]) {
-						array[i][j].setIcon(new ImageIcon(("src/Imagenes/boton1.png")));
+				if(c.getSource()==estados[i][j]) {
+					JOptionPane.showConfirmDialog(estados[i][j], "¡Pulso el boton "+i+", "+j);
+					if(c.getSource()==estados[i][j]) {
+						botones[i][j]="b";
 					}
+					
 				}
+				if(botones[i][j].equals("n")) {
+					estados[i][j].setIcon(new ImageIcon(("src/Imagenes/botonnegro.png")));
+				}
+				else {
+					estados[i][j].setIcon(new ImageIcon(("src/Imagenes/botonblanco.png")));
+				}
+				
+				
+				
+				
 			}
 			
 		}
