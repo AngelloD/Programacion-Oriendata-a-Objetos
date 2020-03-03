@@ -5,22 +5,26 @@ import java.awt.GridLayout;
 import java.awt.event.*;
 
 public class Interfaz extends JFrame implements ActionListener{
-
+int columnas;
+int filas;
+int cambio;
+int movimiento;
+int desplazar;
 	ImageIcon negra;
 	ImageIcon blanca;
 	JButton array[][];
 	JPanel Panel;
-	int n=8;
+	int n=10;
 	int contador=0;
 	boolean respuesta;
 
 	public Interfaz() {
 		Panel = new JPanel();
-		array = new JButton[n][n];
-		Panel.setLayout(new GridLayout (n,n));
+		array = new JButton[8][8];
+		Panel.setLayout(new GridLayout (8,8));
 
-		for(int x=0;x<n;x++) {
-			for(int y=0;y<n;y++) {
+		for(int x=0;x<8;x++) {
+			for(int y=0;y<8;y++) {
 				array[x][y]=new JButton("boton "+ x +" , " + y);
 				array[x][y].addActionListener(this);
 				Panel.add(array[x][y]);
@@ -47,8 +51,8 @@ public class Interfaz extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent c) {
 		respuesta = true;
-		for(int x=0;x<n;x++) {
-			for(int y=0;y<n;y++) {
+		for(int x=0;x<8;x++) {
+			for(int y=0;y<8;y++) {
 				if(contador<60) {
 					if(c.getSource()==array[x][y]) {
 
@@ -242,8 +246,8 @@ public class Interfaz extends JFrame implements ActionListener{
 			}
 		}
 	}
-	
-	
+
+
 	public void BuscaNegras(int i, int j, int x, int y, JButton array[][], boolean respuesta) {
 		if(array[i][j].getText().equals("negras")) {
 			int w=i;
@@ -267,82 +271,404 @@ public class Interfaz extends JFrame implements ActionListener{
 
 
 	public void Cambiar(int x, int y) {
-		
-				
-			if(array[x][y+2].getText().equals("negras")) {
-				do {
-				array[x][y+1].setIcon(new ImageIcon("src/Imagenes/negra.png"));
-				y++;
-				}while(array[x][y+1].equals("negras"));
-			}
-				
-				
-			if(array[x][y-2].getText().equals("negras")) {
-				do {
-				array[x][y-1].setIcon(new ImageIcon("src/Imagenes/negra.png"));
-				y--;
-				}while(array[x][y-1].equals("negras"));
-			}
-				
-				
-				
-			if(array[x+2][y].getText().equals("negras")) {
-				do {
-				array[x+1][y].setIcon(new ImageIcon("src/Imagenes/negra.png"));
-				x++;
-				}while(array[x+1][y].equals("negras"));
-			}
-				
-				
-			if(array[x-2][y].getText().equals("negras")) {
-				do {
-				array[x-1][y].setIcon(new ImageIcon("src/Imagenes/negra.png"));
-				x--;
-				}while(array[x-1][y].equals("negras"));
-			}
-				
-		
-		
-		
-		
-	
 
-				
-			if(array[x][y+2].getText().equals("blancas")) {
+		if(array[x][y].getText().equals("negras")) {
+
+			if(array[x][y+1].getText().equals("blancas")) {
+				columnas=y+1;
+
 				do {
-				array[x][y+1].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
-				y++;
-				}while(array[x][y+1].equals("blancas"));
+					if(array[x][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[x][columnas].getText().equals("blancas")) {
+						columnas++;
+						desplazar++;
+					}
+					if((array[x][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[x][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+					}
+				}
 			}
-				
-				
-				
-			if(array[x][y-2].getText().equals("blancas")) {
+
+			movimiento=0;
+			desplazar=0;
+
+			if(array[x][y-1].getText().equals("blancas")) {
+				columnas=y-1;
+
 				do {
-				array[x][y-1].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
-				y--;
-				}while(array[x][y-1].equals("blancas"));
+					if(array[x][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[x][columnas].getText().equals("blancas")) {
+						columnas++;
+						desplazar++;
+					}
+					if((array[x][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[x][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+					}
+				}
 			}
-				
-				
-				
-			if(array[x+2][y].getText().equals("blancas")) {
+			movimiento=0;
+			desplazar=0;
+			if(array[x+1][y+1].getText().equals("blancas")) {
+				columnas=y+1;
+				filas=x+1;
 				do {
-				array[x+1][y].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
-				x++;
-				}while(array[x+1][y].equals("blancas"));
+					if(array[filas][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("blancas")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				filas=x+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+						filas++;
+					}
+				}
 			}
-				
-				
-			if(array[x-2][y].getText().equals("blancas")) {
+			movimiento=0;
+			desplazar=0;
+			if(array[x-1][y+1].getText().equals("blancas")) {
+				columnas=y+1;
+				filas=x-1;
 				do {
-				array[x-1][y].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
-				x--;
-				}while(array[x-1][y].equals("blancas"));
+					if(array[filas][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("blancas")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				filas=x-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+						filas++;
+					}
+				}
 			}
-			       
-		  }
-	
+			movimiento=0;
+			desplazar=0;
+			if(array[x-1][y-1].getText().equals("blancas")) {
+				columnas=y-1;
+				filas=x-1;
+				do {
+					if(array[filas][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("blancas")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				filas=x-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+			movimiento=0;
+			desplazar=0;
+			if(array[x+1][y-1].getText().equals("blancas")) {
+				columnas=y-1;
+				filas=x+1;
+				do {
+					if(array[filas][columnas].getText().equals("negras")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("blancas")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				filas=x+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/negra.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+		}
+		
+//////////////////////////////////////////////////////////////////////////////////////
+		
+		if(array[x][y].getText().equals("blancas")) {
+
+			if(array[x][y+1].getText().equals("negras")) {
+				columnas=y+1;
+
+				do {
+					if(array[x][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[x][columnas].getText().equals("negras")) {
+						columnas++;
+						desplazar++;
+					}
+					if((array[x][columnas].getText().equals("negras")==false)&&(array[x][columnas].getText().equals("blancas")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[x][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+					}
+				}
+			}
+
+			movimiento=0;
+			desplazar=0;
+
+			if(array[x][y-1].getText().equals("negras")) {
+				columnas=y-1;
+
+				do {
+					if(array[x][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[x][columnas].getText().equals("negras")) {
+						columnas++;
+						desplazar++;
+					}
+					if((array[x][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[x][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+					}
+				}
+			}
+			movimiento=0;
+			desplazar=0;
+			if(array[x+1][y+1].getText().equals("negras")) {
+				columnas=y+1;
+				filas=x+1;
+				do {
+					if(array[filas][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("negras")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				filas=x+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+			movimiento=0;
+			desplazar=0;
+			if(array[x-1][y+1].getText().equals("negras")) {
+				columnas=y+1;
+				filas=x-1;
+				do {
+					if(array[filas][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("negras")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y+1;
+				filas=x-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+			movimiento=0;
+			desplazar=0;
+			if(array[x-1][y-1].getText().equals("negras")) {
+				columnas=y-1;
+				filas=x-1;
+				do {
+					if(array[filas][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("negras")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				filas=x-1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+			movimiento=0;
+			desplazar=0;
+			if(array[x+1][y-1].getText().equals("negras")) {
+				columnas=y-1;
+				filas=x+1;
+				do {
+					if(array[filas][columnas].getText().equals("blancas")) {
+						cambio=1;
+						movimiento=1;
+					}
+
+					if(array[filas][columnas].getText().equals("negras")) {
+						columnas++;
+						filas++;
+						desplazar++;
+					}
+					if((array[filas][columnas].getText().equals("blancas")==false)&&(array[x][columnas].getText().equals("negras")==false))/*Aqui esta el problema de que no se iguala a los espacios vacios	*/	 {
+						movimiento=2;
+					}
+
+
+				}while(movimiento==0);
+
+				columnas=y-1;
+				filas=x+1;
+				if(cambio==1) {
+					for(int i=0; i<desplazar; i++) {
+						array[filas][columnas].setIcon(new ImageIcon("src/Imagenes/blanca.png"));
+						columnas++;
+						filas++;
+					}
+				}
+			}
+		}
+		
+		
+	}
+
 
 	
 	
