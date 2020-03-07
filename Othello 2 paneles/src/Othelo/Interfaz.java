@@ -3,10 +3,15 @@ package Othelo;
 import javax.swing.*;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Interfaz extends JFrame implements ActionListener{
 
 	//Atributos
+	int puntaje1;
+	int puntaje2;
 	JPanel Panel;
 	JButton array[][];
 	ImageIcon negra;
@@ -23,6 +28,7 @@ public class Interfaz extends JFrame implements ActionListener{
 
 
 	public Interfaz() {//Metodo Constructor
+		
 		Panel = new JPanel();
 		array = new JButton[8][8];
 		Panel.setLayout(new GridLayout (8,8));
@@ -45,7 +51,9 @@ public class Interfaz extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent c) {
-
+		int h=0;
+	int f=0;
+		primerpanel p1= new primerpanel();
 		try {
 			for(int x=0;x<8;x++) {
 				for(int y=0;y<8;y++) {
@@ -67,11 +75,35 @@ public class Interfaz extends JFrame implements ActionListener{
 						}
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Fin del juego");
-						System.exit(0);
+					
+							
+							for(int e=0;e<8;e++){
+								for(int o=0;o<8;o++){
+
+									if(array[e][o].getText().equals("negras")){
+										h++;
+										}
+									else 
+										if(array[e][o].getText().equals("blancas")){
+										f++;
+										}
+									
+								
+							}
+							
+						}
+						
+						
+							
+							JOptionPane.showMessageDialog(null,"El puntaje de el jugador de las negras es "+h + " y  El puntaje de el jugador de las blancas es "+f );
+							JOptionPane.showMessageDialog(null, "Fin del juego"); 
+							System.exit(0);
+					
 					}
+					
 				}
 			}
+			
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "Error desde la toma de la jugada "+e.toString());
